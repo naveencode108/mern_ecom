@@ -79,7 +79,7 @@ export const Cart = () => {
                           className="w-16 h-16 object-contain rounded mr-1"
                         />
                         <span className='text-xs flex gap-3 flex-col md:flex-row'>{item.productId.productName}
-                          <button onClick={()=>removeFromCart(item.productId._id)} className='text-xs text-blue-300'>Remove</button>
+                          <button onClick={()=>removeFromCart(item.productId._id)} className='text-xs text-red-500'>Remove</button>
                         </span>
                       </td>
                         <td className="py-3 px-4 text-sm flex items-center gap-2">

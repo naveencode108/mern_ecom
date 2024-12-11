@@ -117,6 +117,43 @@ const Home = () => {
             </div>
           </div>
 
+           {/* show products category wise */}
+          <div className="bg-gradient-to-b from-black via-gray-900 to-gray-800 text-white px-6 md:px-16 py-8">
+            {category.map((cat, index) => {
+              return (
+                <div key={index}>
+                  <h2
+                    className="capitalize text-3xl md:text-5xl font-bold text-center mb-8 border-b-2 border-violet-400"
+                  >
+                    {cat}
+                  </h2>
+                    {products
+                      .filter((item) => item.category == cat).length>1&&
+                       <Link to={{
+                        pathname:'/product',
+                        search:cat
+                       }} className="text-violet-300">Show more</Link>
+                      }
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-8 ">
+                    {products
+                      .filter((item) => item.category == cat)
+                      .slice(0, 4)
+                      .map((item, idx) => (
+                        <Card
+                          key={idx}
+                          id={item._id}
+                          productImagesurl={item.productImagesurl}
+                          productName={item.productName}
+                          productPrice={item.productPrice}
+                        />
+                      ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
           {/* Testimonials Section */}
           <div className="bg-gray-900 text-white px-6 md:px-16 py-10">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-8">

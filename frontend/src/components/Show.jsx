@@ -18,11 +18,10 @@ export const Show = () => {
   const [productImages, setProductImages] = useState([]);
   const [mainImage, setMainImage] = useState();
   // const [quantity, setQuantity] = useState(1);
-  const [loadingButton, setLoadingButton] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [starRating, setstarRating] = useState(0);
     
-  const {Quantity,setquantity}=useContext(QuantityContext);
+  const {Quantity,setquantity,addToCart,loadingButton}=useContext(QuantityContext);
 
 
 
@@ -43,24 +42,6 @@ export const Show = () => {
     } catch (err) {
       toast.error(err.message);
     }
-  };
-
-  const addToCart = async (id) => {
-    if (!sessionStorage.getItem("login_token")) {
-      toast.error("You need to login first.");
-      return;
-    }
-    setLoadingButton(true);
-    try {
-      // const res = await axios.post("/products/add_to_cart", { productId: id, quantity }, { withCredentials: true });
-      const res = await axios.post("/products/add_to_cart", { productId: id, quantity:Quantity }, { withCredentials: true });
-      if (res.data.success) {
-        toast.success(res.data.message);
-      }
-    } catch (err) {
-      toast.error(err.message);
-    }
-    setLoadingButton(false);
   };
 
   const addToWishlist = async () => {
@@ -152,7 +133,7 @@ export const Show = () => {
                   </select>
                   <div className="flex gap-4">
                     <button
-                      onClick={() => addToCart(productId)}
+                      onClick={() => addToCart(productId,Quantity)}
                       disabled={loadingButton}
                       className="px-6 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600"
                     >
