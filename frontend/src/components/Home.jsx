@@ -1,138 +1,3 @@
-// import { useEffect, useState } from "react";
-// import { Card } from "./Card";
-// import axios from "../utils/Axios";
-// import { Link } from "react-router-dom";
-
-// const Home = () => {
-//   const [category, setCategory] = useState([]);
-//   const [products, setProducts] = useState([]);
-//   const [isLoading, setisLoading] = useState(true);
-
-//   const fetchProduct = async () => {
-//     try {
-//       const res = await axios.get("/products/get_all_product", {
-//         withCredentials: true,
-//       });
-//       if (res.data.success) {
-//         const val = Array.from(
-//           new Set(res.data.message.map((item) => item.category))
-//         );
-//         setCategory(val);
-//         setProducts(res.data.message);
-//       }
-//     } catch (er) {
-//       console.log(er.message);
-//     } finally {
-//       setisLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchProduct();
-//   }, []);
-
-//   return (
-//     <>
-//       {isLoading ? (
-//         <div className="w-full h-screen bg-gradient-to-br from-indigo-600 to-purple-900 text-white text-4xl flex justify-center items-center">
-//           Loading...
-//         </div>
-//       ) : (
-//         <>
-//           {/* Category Section */}
-//           <div className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white px-4 md:px-10 py-5">
-//             <h1 className="text-3xl md:text-4xl font-semibold text-center py-4 capitalize  hover:text-indigo-300 transition duration-200">
-//               Browse by Category
-//             </h1>
-//             <hr className="m-4 border-indigo-600" />
-//             <div className="w-full flex flex-wrap justify-center gap-6">
-//               {category.length > 0 &&
-//                 category.map((cat, key) => {
-//                   const filteredProducts = products.filter(
-//                     (item) => item.category === cat
-//                   );
-//                   if (filteredProducts.length > 0) {
-//                     return (
-//                       <Link
-//                         to={{ pathname: "/product", search: cat }}
-//                         key={key}
-//                         className="bg-white w-40 h-40 rounded-full overflow-hidden flex flex-col justify-center items-center shadow-lg hover:scale-105 transform transition duration-300"
-//                       >
-//                         <div className="w-full">
-//                           <img
-//                             className="w-full h-20 object-contain"
-//                             src={
-//                               filteredProducts.length > 0 &&
-//                               filteredProducts[0].productImagesurl[0]
-//                             }
-//                             alt=""
-//                           />
-//                         </div>
-//                         <p className="text-black font-semibold capitalize text-center">
-//                           {cat}
-//                         </p>
-//                       </Link>
-//                     );
-//                   }
-//                   return null;
-//                 })}
-//             </div>
-//           </div>
-
-//           {/* Products Section */}
-//           <div className="w-full bg-gradient-to-r from-gray-800 via-gray-900 to-black min-h-screen px-4 md:px-10 py-10 text-white">
-//             {category.length > 0 &&
-//               category.map((categories, key) => (
-//                 <div className="w-full mb-16" key={key}>
-//                   <h1 className="text-3xl md:text-4xl font-semibold text-center py-4 capitalize text-indigo-400 hover:text-indigo-300 transition duration-200">
-//                     {categories}
-//                   </h1>
-
-//                   {products.filter((item) => item.category === categories)
-//                     .length > 4 && (
-//                     <div className="flex justify-center sm:justify-end items-center">
-//                       <Link
-//                         to={{
-//                           pathname: "/product",
-//                           search: categories,
-//                         }}
-//                         className="text-sm"
-//                       >
-//                         show more
-//                       </Link>
-//                     </div>
-//                   )}
-
-//                   <hr className="m-4 border-indigo-600" />
-//                   <div className="w-full px-3">
-//                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-//                       {products.length > 0 &&
-//                         products
-//                           .filter((item) => item.category === categories)
-//                           .splice(0, 4)
-//                           .map((item, idx) => (
-//                             <Card
-//                               key={idx}
-//                               id={item._id}
-//                               productImagesurl={item.productImagesurl}
-//                               productName={item.productName}
-//                               productPrice={item.productPrice}
-//                             />
-//                           ))}
-//                     </div>
-//                   </div>
-//                 </div>
-//               ))}
-//           </div>
-//         </>
-//       )}
-//     </>
-//   );
-// };
-
-// export default Home;
-
-
 import { useEffect, useState } from "react";
 import { Card } from "./Card";
 import axios from "../utils/Axios";
@@ -165,6 +30,7 @@ const Home = () => {
   useEffect(() => {
     fetchProduct();
   }, []);
+
 
   return (
     <>
@@ -206,7 +72,7 @@ const Home = () => {
               Browse by Category
             </h1>
             <div className="w-full flex flex-wrap justify-center gap-8">
-              {category.length>0&&category.map((cat, key) => {
+              {category.map((cat, key) => {
                 const filteredProducts = products.filter(
                   (item) => item.category === cat
                 );
@@ -239,7 +105,7 @@ const Home = () => {
               Featured Products
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {products.length>0&&products.slice(0, 8).map((item, idx) => (
+              {products.slice(0, 8).map((item, idx) => (
                 <Card
                   key={idx}
                   id={item._id}
