@@ -1,8 +1,9 @@
 import { Breadcrumbs, Stack, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../../utils/Axios';
 import {toast} from 'react-toastify';
+import { QuantityContext } from '../../context/Mycontext';
 
 const Wishlist = () => {
 
@@ -32,18 +33,20 @@ const Wishlist = () => {
        }
    }
 
-   const handleCart=async(productId,quantity)=>{
-        try{ 
-             let res=await axios.post('/products/add_to_cart',{productId,quantity},{withCredentials:true});
-             if(res.data.success){
-                toast.success(res.data.message);
-             }
-        }
-        catch(er){
-          console.log(er.message);
-          toast.error(er.message);
-        }
-   }
+  //  const handleCart=async(productId,quantity)=>{
+  //       try{ 
+  //            let res=await axios.post('/products/add_to_cart',{productId,quantity},{withCredentials:true});
+  //            if(res.data.success){
+  //               toast.success(res.data.message);
+  //            }
+  //       }
+  //       catch(er){
+  //         console.log(er.message);
+  //         toast.error(er.message);
+  //       }
+  //  }
+
+  const {addToCart,loadingButton}=useContext(QuantityContext);
      
      
    useEffect(()=>{
@@ -82,7 +85,7 @@ const Wishlist = () => {
 
                 <div className="flex justify-between items-center">
                   {item.productId.stock>0?
-                    <button onClick={()=>handleCart(item.productId._id,1)} className='text-sm md:text-md font-semibold px-2 py-1 rounded-full bg-sky-500 text-white'>AddtoCart</button>
+                    <button disabled={loadingButton} onClick={()=>addToCart(item.productId._id,1)} className='text-sm md:text-md font-semibold px-2 py-1 rounded-full bg-sky-500 text-white'>AddtoCart</button>
                   :<p className='text-red-500'>Out of Stock</p>}
                   <button onClick={()=>handleRemove(item.productId._id)} className='text-sm md:text-md font-semibold px-2 py-1 rounded-full bg-sky-500 text-white'>Remove</button>
                 </div>
